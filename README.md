@@ -10,7 +10,9 @@ The working example will be the implementation of a toy calculator in Python.
 More concretely we are going to demonstrate:  
 1. Branching, Creating and merging a PR  
 2. Rebasing and Merge conflict resolution  
-3. Commit squashing  
+3. Bonus part: `git bisect`
+
+Note that in a previous tutorial I explicitly recommended never to do `git push -f`. Well, almost never.  
 
 ## Part 1: Branching out  
 
@@ -91,9 +93,87 @@ if __name__ == '__main__':
     main()
 ```
 
-Alice also updated the dependency versions in `requirements.txt`:
+Now Bob finishes his task and his code looks like this:
 
+- `run.py`
+```python
+import sys
+
+
+def mult(x, y):
+    return float(x) * float(y)
+
+
+def main():
+    # The operation we want to perform will be passed
+    # as a string in the positional command line args
+    # Example: python run.py '1 + 2'
+    args = sys.argv[1].strip().split()
+    x, op, y = args[0], args[1], args[2]
+    if op == '*':
+        print(mult(x, y))
+
+
+if __name__ == '__main__':
+    main()
 ```
-numpy==1.13.3
-requests==2.18.4
+- `requirements.txt`
 ```
+numpy==1.7.1
+requests==2.7.0
+```
+
+Since Alice's code was already merged he will have to rebase his branch to the upstream code by running:
+```bash
+git checkout master
+git pull
+git checkout TASK-3-implement-multiplication
+git rebase master
+First, rewinding head to replay your work on top of it...
+Applying: Implement multiplication
+Using index info to reconstruct a base tree...
+M	run.py
+Falling back to patching base and 3-way merge...
+Auto-merging run.py
+CONFLICT (content): Merge conflict in run.py
+error: Failed to merge in the changes.
+Patch failed at 0001 Implement multiplication
+The copy of the patch that failed is found in: .git/rebase-apply/patch
+
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
+```
+
+We see that we have to resolve some merge conflicts. I really recommend using [meld](http://meldmerge.org/) for this. [This excellent stackoverflow answer says all you need to know to get started](https://stackoverflow.com/a/34119867).
+
+We can fire up meld by running:
+
+```bash
+git mergetool
+```
+
+And resolve the conflicts as shown in the following video (sorry for the bad quality):
+[![meld conflict resolution](https://img.youtube.com/vi/LrQ4-sILJ7A/0.jpg)](https://www.youtube.com/watch?v=LrQ4-sILJ7A)
+
+Let's take this step by step. What we did is a 3-way merge.  
+- On the left we can see the upstream code (master)  
+- On the right we can see the local branch (TASK-3-implement-multiplication)  
+- In the middle we can see their common ancestor which will be the final product  
+
+Resolving MCs then is just a matter of picking and choosing what we need from each branch.
+
+Once we're finished we can run:  
+
+```bash
+git rebase --continue
+git push -f
+```
+
+And create the PR as usual.
+
+### Case 2: Branching out from an unmerged branch
+
+Now let's assume that we create a new task, TASK-4-implement-division and assign it to George. George wants to base his work on Bob's work on multiplication so at some point he branches out of TASK-3-implement-multiplication.
+
+W
