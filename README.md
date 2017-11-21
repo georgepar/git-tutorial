@@ -227,6 +227,8 @@ if __name__ == '__main__':
     main()
 ```
 
+**NOTE** Yes it has a bug. I may use it to demo [`git bisect`](https://lwn.net/Articles/317154/) in the future.
+
 ## Conclusions
 
 We have demonstrated how to follow a simple git development workflow by branching, creating and merging pull requests. We have demonstrated how we can always keep our PRs up to date and ready to merge by rebasing on master.
