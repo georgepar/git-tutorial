@@ -17,7 +17,7 @@ def main():
         print(mult(x, y))
 
     if op == '+':
-        return add(x, y)
+        print(add(x, y))
 
 
 if __name__ == '__main__':
