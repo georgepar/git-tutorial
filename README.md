@@ -62,6 +62,10 @@ We can go into our VCS UI (in this case github) and create a pull request. When 
 
 ## Part 2: Rebasing
 
+I have advocated that it's the author's responsibility to maintain his PRs and keep them up to date.
+
+`git rebase` changes the parent of a revision to a designated branch. Using `git rebase` to rebase our branches / PRs on master allows to always keep the PRs up to date and ready to merge.
+
 ### Case 1: Two independent devs develop different features
 
 In this case let's assume that we have 2 tasks, TASK-2-implement-addition and TASK-3-implement-multiplication.
@@ -169,7 +173,7 @@ git rebase --continue
 git push -f
 ```
 
-And create the PR as usual.
+And merge the PR as usual.
 
 ### Case 2: Branching out from an unmerged branch
 
@@ -220,3 +224,12 @@ if __name__ == '__main__':
     main()
 ```
 
+## Conclusions
+
+We have demonstrated how to follow a simple git development workflow by branching, creating and merging pull requests. We have demonstrated how we can always keep our PRs up to date and ready to merge by rebasing on master.
+
+For more detailed information you can check the Git Pro book (1)  which is available freely online. It's a fast and essential read for every software dev. You can do a minimal read to be able to get things done: Chapters 2, 3, 4.3, 5.2, A3  and additionally read Chapters 5 (rest), 7, 8 for more advanced concepts.
+
+## References
+
+[(1)](https://git-scm.com/book/en/v2)
