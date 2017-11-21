@@ -128,10 +128,12 @@ requests==2.7.0
 
 Since Alice's code was already merged he will have to rebase his branch to the upstream code by running:
 ```bash
-git checkout master
-git pull
-git checkout TASK-3-implement-multiplication
-git rebase master
+~ git checkout master
+...
+~ git pull
+~ git checkout TASK-3-implement-multiplication
+...
+~ git rebase master
 First, rewinding head to replay your work on top of it...
 Applying: Implement multiplication
 Using index info to reconstruct a base tree...
