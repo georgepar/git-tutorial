@@ -21,9 +21,9 @@ def main():
 
     if op == '+':
         print(add(x, y))
-
     if op == '/':
         print(division(x, y))
+
 
 
 if __name__ == '__main__':

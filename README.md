@@ -176,4 +176,74 @@ And create the PR as usual.
 
 Now let's assume that we create a new task, TASK-4-implement-division and assign it to George. George wants to base his work on Bob's work on multiplication so at some point he branches out of TASK-3-implement-multiplication.
 
-W
+While he's developing Bob's PR gets merged. This problem can also be resolved with a rebase:
+
+```
+git checkout master
+git pull
+git checkout TASK-4-implement-division
+git rebase master
+git push -f
+```
+
+and the final code is:
+
+```python
+import sys
+
+
+def add(x, y):
+    return x + y
+
+def mult(x, y):
+    return float(x) * float(y)
+
+def division(x, y):
+    return mult(x, 1.0 / float(y))
+
+def main():
+    # The operation we want to perform will be passed
+    # as a string in the positional command line args
+    # Example: python run.py '1 + 2'
+    args = sys.argv[1].strip().split()
+    x, op, y = args[0], args[1], args[2]
+    if op == '*':
+        print(mult(x, y))
+
+    if op == '+':
+        print(add(x, y))
+
+    if op == '/':
+        print(division(x, y))
+
+
+if __name__ == '__main__':
+    main()
+```
+
+## Bonus part: `git bisect`
+
+For the more careful reader it must be obvious that we have a nasty bug. In such a small codebase it's really easy to spot by careful inspection but in a larger codebase with more complicated code it can take hours or even days to find such bugs.
+
+In this section we will introduce a new tool, `git bisect` that helps us find the commit that introduced a bug. You can find a more detailed tutorial on `git bisect` [here](https://lwn.net/Articles/317154/).
+
+To run this we first need to create a test. In this case it's a simple bash script, but it can be a whole suite of unit, regression or functional tests. As long as it can be run and returns an exit code.
+
+- `test.bash`  
+```bash
+expected='1'
+out="$(python run.py '1 + 2')"
+
+
+[ "$out" == "$expected" ] || exit 1
+
+exit 0
+```
+
+We can run it and see that it fails (returns exit code 1):
+```
+~ bash test.bash
+~ echo $?
+1
+```
+
