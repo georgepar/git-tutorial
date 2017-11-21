@@ -10,7 +10,6 @@ The working example will be the implementation of a toy calculator in Python.
 More concretely we are going to demonstrate:  
 1. Branching, Creating and merging a PR  
 2. Rebasing and Merge conflict resolution  
-3. Bonus part: `git bisect`
 
 Note that in a previous tutorial I explicitly recommended never to do `git push -f`. Well, almost never.  
 
@@ -219,31 +218,5 @@ def main():
 
 if __name__ == '__main__':
     main()
-```
-
-## Bonus part: `git bisect`
-
-For the more careful reader it must be obvious that we have a nasty bug. In such a small codebase it's really easy to spot by careful inspection but in a larger codebase with more complicated code it can take hours or even days to find such bugs.
-
-In this section we will introduce a new tool, `git bisect` that helps us find the commit that introduced a bug. You can find a more detailed tutorial on `git bisect` [here](https://lwn.net/Articles/317154/).
-
-To run this we first need to create a test. In this case it's a simple bash script, but it can be a whole suite of unit, regression or functional tests. As long as it can be run and returns an exit code.
-
-- `test.bash`  
-```bash
-expected='1'
-out="$(python run.py '1 + 2')"
-
-
-[ "$out" == "$expected" ] || exit 1
-
-exit 0
-```
-
-We can run it and see that it fails (returns exit code 1):
-```
-~ bash test.bash
-~ echo $?
-1
 ```
 
