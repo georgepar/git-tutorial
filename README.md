@@ -30,4 +30,4 @@ git push -u origin TASK-1-initial-calc
 
 Now we developed an initial version of our calculator in a new branch. We can go into our VCS UI (in this case github) and create a pull request. When this PR passes the CI tests and the other dev reviews it can be merged from the UI.
 
-
+![My image](images/pr.png)
