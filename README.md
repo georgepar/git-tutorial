@@ -232,4 +232,4 @@ For more detailed information you can check the Git Pro book (1)  which is avail
 
 ## References
 
-[(1)](https://git-scm.com/book/en/v2)
+[(1) Git Pro](https://git-scm.com/book/en/v2)
