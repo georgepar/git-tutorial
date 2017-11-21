@@ -8,7 +8,7 @@ def mult(x, y):
     return float(x) * float(y)
 
 def division(x, y):
-    return mult(x, 1.0 / y)
+    return mult(x, 1.0 / float(y))
 
 def main():
     # The operation we want to perform will be passed
@@ -20,10 +20,10 @@ def main():
         print(mult(x, y))
 
     if op == '+':
-        return add(x, y)
+        print(add(x, y))
 
     if op == '/':
-        return division(x, y)
+        print(division(x, y))
 
 
 if __name__ == '__main__':
